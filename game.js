@@ -8,7 +8,6 @@ let user_score = 0;
 
 function startGame(){
     let start = document.getElementById("start");
-    console.log("hello");
     start.addEventListener("mouseover", playGame);
        
 }
@@ -41,6 +40,7 @@ function winGame(){
         game_over = true;
         let game_status = document.getElementById("status");
         game_status.innerText = "You won";
+        game_status.style = "color: limegreen";
         user_score += 5;
         showScore();
     }
@@ -57,6 +57,7 @@ function loseGame(){
         }
         let game_status = document.getElementById("status");
         game_status.innerText = "You lost";
+        game_status.style = "color: #ff8888";
         user_score -= 10;
         showScore();
 
@@ -76,7 +77,7 @@ function gotOutOfBounds(){
 function showScore(){
     let score_box = document.getElementsByClassName("example")[0];
     score_box.innerText = "Score:" + " " + user_score; 
-    score_box.style.cssText = "text-align: center; font-size: 24px; font-weight: bold; color: dodgerblue; vertical-align: middle";
+    score_box.style.cssText = "text-align: center; font-size: 18px; font-weight: bold; color: dodgerblue;line-height: 1.em";
 
 }
 
@@ -88,6 +89,9 @@ function restartGame(){
         for (let i = 0; i < n -1; i++){
             boundaries[i].classList.remove("youlose");
         }
+        let game_status = document.getElementById("status");
+        game_status.innerText = "Begin by moving your mouse over the \"S\".";
+        game_status.style = "color: black";
         
     }
     else return;
@@ -96,9 +100,10 @@ function restartGame(){
 
 function addRestartButton(){
     let restart_node = document.createElement("div");
-    restart_node.setAttribute("id", "restart");
-    restart_node.innerHTML = "Restart";
-    restart_node.style = "text-align: center; width: 100px; margin: 0 auto; padding: 10px 20px; font-size: 24px; font-weight: bold; color: black; background-color: limegreen; border: 1px solid black; border-radius: 5px;";
+    restart_node.innerHTML = "<button> Restart </button>";
+    restart_node.style = "text-align: center; margin: 0 auto;";
+    restart_node.childNodes[0].setAttribute("id", "restart");
+    restart_node.childNodes[0].style = "font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: limegreen; border: 1px solid black; border-radius: 5px;"
     document.body.appendChild(restart_node);
  
 }
