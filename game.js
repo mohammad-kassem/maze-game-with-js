@@ -34,6 +34,7 @@ function winGame(){
         let game_status = document.getElementById("status");
         game_status.innerText = "You won";
         user_score += 5;
+        showScore();
     }
 }
 
@@ -49,6 +50,7 @@ function loseGame(){
         let game_status = document.getElementById("status");
         game_status.innerText = "You lost";
         user_score -= 10;
+        showScore();
 
     }
 
@@ -61,4 +63,11 @@ function gotOutOfBounds(){
         alert("You cheated!");
 
     }
+}
+
+function showScore(){
+    let score_box = document.getElementsByClassName("example")[0];
+    score_box.innerText = "Score:" + " " + user_score; 
+    score_box.style.cssText = "text-align: center; font-size: 24px; font-weight: bold; color: dodgerblue; vertical-align: middle";
+
 }
