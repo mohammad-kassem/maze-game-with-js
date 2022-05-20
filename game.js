@@ -7,9 +7,8 @@ let user_score = 0;
 
 
 function startGame(){
-
     let start = document.getElementById("start");
-    console.log(start);
+    console.log("hello");
     start.addEventListener("mouseover", playGame);
        
 }
@@ -30,6 +29,9 @@ function playGame(){
     
     let out_of_bounds = document.getElementById("game");
     out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);
+
+    let restart_button_area = document.getElementById("restart");
+    restart_button_area.addEventListener("click", restartScore);
 }
     
 
@@ -86,6 +88,7 @@ function restartGame(){
         for (let i = 0; i < n -1; i++){
             boundaries[i].classList.remove("youlose");
         }
+        
     }
     else return;
 }
@@ -93,8 +96,16 @@ function restartGame(){
 
 function addRestartButton(){
     let restart_node = document.createElement("div");
+    restart_node.setAttribute("id", "restart");
     restart_node.innerHTML = "Restart";
     restart_node.style = "text-align: center; width: 100px; margin: 0 auto; padding: 10px 20px; font-size: 24px; font-weight: bold; color: black; background-color: limegreen; border: 1px solid black; border-radius: 5px;";
     document.body.appendChild(restart_node);
  
+}
+
+function restartScore(){
+    user_score = 0;
+    showScore();
+    restartGame();
+    game_over = true;
 }
