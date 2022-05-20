@@ -21,6 +21,9 @@ function playGame(){
     for (let i = 0; i < n - 1; i ++ ){
         boundaries[i].addEventListener("mouseover", loseGame); 
     }
+    
+    let out_of_bounds = document.getElementById("game");
+    out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);
 }
     
 
@@ -49,4 +52,13 @@ function loseGame(){
 
     }
 
+}
+
+function gotOutOfBounds(){
+    if (game_over) return;
+    else{
+        game_over = true;
+        alert("You cheated!");
+
+    }
 }
