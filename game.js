@@ -71,3 +71,24 @@ function showScore(){
     score_box.style.cssText = "text-align: center; font-size: 24px; font-weight: bold; color: dodgerblue; vertical-align: middle";
 
 }
+
+function restartGame(){
+    if (game_over){
+        game_over = false;
+        boundaries = document.getElementsByClassName("boundary");
+        let n = boundaries.length;
+        for (let i = 0; i < n -1; i++){
+            boundaries[i].classList.remove("youlose");
+        }
+    }
+    else return;
+}
+
+
+function addRestartButton(){
+    let restart_node = document.createElement("div");
+    restart_node.innerHTML = "Restart";
+    restart_node.style = "text-align: center; width: 100px; margin: 0 auto; padding: 10px 20px; font-size: 24px; font-weight: bold; color: black; background-color: limegreen; border: 1px solid black; border-radius: 5px;";
+    document.body.appendChild(restart_node);
+ 
+}
