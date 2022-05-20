@@ -1,10 +1,13 @@
 window.addEventListener("load", startGame);
+window.addEventListener("load", showScore);
+window.addEventListener("load", addRestartButton);
 
 let game_over = false; 
 let user_score = 0;
 
 
 function startGame(){
+
     let start = document.getElementById("start");
     console.log(start);
     start.addEventListener("mouseover", playGame);
@@ -13,6 +16,9 @@ function startGame(){
 
 
 function playGame(){
+    let start = document.getElementById("start");
+    start.addEventListener("click", restartGame);
+
     end = document.getElementById("end");
     end.addEventListener("mouseover", winGame);
 
