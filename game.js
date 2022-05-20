@@ -15,6 +15,12 @@ function startGame(){
 function playGame(){
     end = document.getElementById("end");
     end.addEventListener("mouseover", winGame);
+
+    let boundaries = document.getElementsByClassName("boundary");
+    let n = boundaries.length;
+    for (let i = 0; i < n - 1; i ++ ){
+        boundaries[i].addEventListener("mouseover", loseGame); 
+    }
 }
     
 
@@ -26,4 +32,21 @@ function winGame(){
         game_status.innerText = "You won";
         user_score += 5;
     }
+}
+
+function loseGame(){
+    if (game_over) return;
+    else{
+        game_over = true;
+        boundaries = document.getElementsByClassName("boundary")
+        let n = boundaries.length;
+        for (let i = 0; i < n - 1 ; i ++){
+            boundaries[i].classList.add("youlose");
+        }
+        let game_status = document.getElementById("status");
+        game_status.innerText = "You lost";
+        user_score -= 10;
+
+    }
+
 }
