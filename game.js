@@ -3,10 +3,11 @@ window.addEventListener("load", createScoreBlock);
 
 let game_over = true; 
 let user_score = 0;
-let interval = 0;
+let live_time_interval = 0;
+let game_time = 0;
+let best_time = Infinity;
 
 function playGame(){
-
     let start = document.getElementById("start");
     start.addEventListener("mouseover", startGame);
 
@@ -40,7 +41,9 @@ function winGame(){
         game_status.style = "color: limegreen";
         user_score += 5;
         showScore();
-        
+        clearInterval(live_time_interval);
+        upadateLastTime(game_time);
+        updateBestTime(game_time);
     }
 }
 
@@ -57,7 +60,7 @@ function loseGame(){
         game_status.style = "color: #ff8888";
         user_score -= 10;
         showScore();
-        clearInterval(interval);
+        clearInterval(live_time_interval);
 
     }
 }
@@ -66,7 +69,7 @@ function gotOutOfBounds(){
     if (!game_over){
         game_over = true;
         alert("You cheated!");
-        clearInterval(interval);
+        clearInterval(live_time_interval);
 
     }
 }
@@ -89,23 +92,22 @@ function showScore(){
 
 
 function startGame(){
-    if (true){
-        let start_time = Date.now();
-    interval = setInterval(function(){
-        time_passed = Date.now() - start_time;
-        live_time = document.getElementById("live");
-        live_time.innerText = "Live" + " " + (time_passed/1000).toFixed(2);
-        },100);
-        let game_status = document.getElementById("status");
-        game_status.innerText = "Game On!";
-        game_over = false;
-        boundaries = document.getElementsByClassName("boundary");
-        let n = boundaries.length;
-        for (let i = 0; i < n -1; i++){
-            boundaries[i].classList.remove("youlose");
-        }
-        playGame();
+    let start_time = Date.now();
+    live_time_interval = setInterval(function(){
+    time_passed = Date.now() - start_time;
+    live_time = document.getElementById("live");
+    game_time = (time_passed/1000).toFixed(2);
+    live_time.innerText = "Live" + " " +  game_time;
+    },100);
+    let game_status = document.getElementById("status");
+    game_status.innerText = "Game On!";
+    game_over = false;
+    boundaries = document.getElementsByClassName("boundary");
+    let n = boundaries.length;
+    for (let i = 0; i < n -1; i++){
+        boundaries[i].classList.remove("youlose");
     }
+    playGame();
 }
 
 
@@ -113,6 +115,19 @@ function startGame(){
 function restartGame(){
     user_score = 0;
     showScore();
+    clearInterval(live_time_interval);
 
 }
 
+function upadateLastTime(game_time){
+    last_time = document.getElementById("last");
+    last_time.innerText = "Last" + " " + game_time;
+
+}
+
+function updateBestTime(game_time){
+    if (game_time < best_time){
+        last_time = document.getElementById("best");
+        last_time.innerText = "Best" + " " + game_time;
+    }
+}
