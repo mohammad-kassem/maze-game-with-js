@@ -1,21 +1,17 @@
-window.addEventListener("load", startGame);
-window.addEventListener("load", showScore);
-window.addEventListener("load", addRestartButton);
+window.addEventListener("load", playGame);
+window.addEventListener("load", createScoreBlock);
 
 let game_over = false; 
 let user_score = 0;
 
 
-function startGame(){
-    let start = document.getElementById("start");
-    start.addEventListener("mouseover", playGame);
-       
-}
-
-
 function playGame(){
+    game_over = false;
     let start = document.getElementById("start");
-    start.addEventListener("click", restartGame);
+    start.addEventListener("mouseenter", startGame);
+
+    let restart = document.getElementById("start");
+    restart.addEventListener("click", restartGame);
 
     end = document.getElementById("end");
     end.addEventListener("mouseover", winGame);
@@ -29,14 +25,14 @@ function playGame(){
     let out_of_bounds = document.getElementById("game");
     out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);
 
-    let restart_button_area = document.getElementById("restart");
-    restart_button_area.addEventListener("click", restartScore);
+
+    start.removeEventListener("mouseenter", playGame);
+
 }
     
 
 function winGame(){
-    if (game_over) return;
-    else{
+    if (!game_over){
         game_over = true;
         let game_status = document.getElementById("status");
         game_status.innerText = "You won";
@@ -47,8 +43,7 @@ function winGame(){
 }
 
 function loseGame(){
-    if (game_over) return;
-    else{
+    if (!game_over){
         game_over = true;
         boundaries = document.getElementsByClassName("boundary")
         let n = boundaries.length;
@@ -60,30 +55,36 @@ function loseGame(){
         game_status.style = "color: #ff8888";
         user_score -= 10;
         showScore();
-
     }
 
 }
 
 function gotOutOfBounds(){
-    if (game_over) return;
-    else{
+    if (!game_over){
         game_over = true;
         alert("You cheated!");
-
     }
 }
 
-function showScore(){
-    let score_box = document.getElementsByClassName("example")[0];
-    score_box.innerText = "Score:" + " " + user_score; 
+function createScoreBlock(){
+    score_box = document.createElement("h1");
+    score_box.id = "score";
     score_box.style.cssText = "text-align: center; font-size: 18px; font-weight: bold; color: dodgerblue;line-height: 1.em";
+    objective = document.getElementsByTagName("p")[0];
+    objective.parentNode.insertBefore(score_box, objective);
+    score_box.innerText = "Score:" + " " + user_score;
+}
+
+
+function showScore(){
+    score_box = document.getElementById("score");
+    score_box.innerText = "Score:" + " " + user_score; 
 
 }
 
-function restartGame(){
-    if (game_over){
-        game_over = false;
+
+function startGame(){
+    if (true){
         boundaries = document.getElementsByClassName("boundary");
         let n = boundaries.length;
         for (let i = 0; i < n -1; i++){
@@ -92,25 +93,16 @@ function restartGame(){
         let game_status = document.getElementById("status");
         game_status.innerText = "Begin by moving your mouse over the \"S\".";
         game_status.style = "color: black";
-        
+        playGame();
     }
-    else return;
 }
 
 
-function addRestartButton(){
-    let restart_node = document.createElement("div");
-    restart_node.innerHTML = "<button> Restart </button>";
-    restart_node.style = "text-align: center; margin: 0 auto;";
-    restart_node.childNodes[0].setAttribute("id", "restart");
-    restart_node.childNodes[0].style = "font-size: 24px; font-weight: bold; padding: 10px 20px; background-color: limegreen; border: 1px solid black; border-radius: 5px;"
-    document.body.appendChild(restart_node);
- 
-}
 
-function restartScore(){
+function restartGame(){
     user_score = 0;
     showScore();
     restartGame();
     game_over = true;
+
 }
