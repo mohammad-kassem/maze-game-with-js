@@ -128,7 +128,7 @@ function createScoreBlock(){
     score_box = document.createElement("h1");
     score_box.id = "score";
     score_box.style.cssText = "text-align: center; font-size: 24px; font-weight: bold; line-height: 1.3";
-    objective = document.getElementsByTagName("p")[0];
+    objective = document.getElementsByTagName("h1")[1];
     objective.parentNode.insertBefore(score_box, objective);
     showScore();
 }
