@@ -25,7 +25,10 @@ function playGame(){
     }
     
     let out_of_bounds = document.getElementById("game");
-    out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);    
+    out_of_bounds.addEventListener("mouseleave", gotOutOfBounds); 
+    
+    let reset = document.getElementById("start");
+    reset.addEventListener("contextmenu", function(event) {event.preventDefault();; restartGame(reset_time)});
     
 
 }
@@ -40,8 +43,8 @@ function winGame(){
         user_score += 5;
         showScore();
         clearInterval(live_time_interval);
-        upadateLastTime();
-        updateBestTime();
+        updateLastTime(game_time);
+        updateBestTime(game_time);
         live_time = document.getElementById("live");
         live_time.innerText = "Live" + " " +  reset_time.toFixed(2);
     }
@@ -121,17 +124,21 @@ function restartGame(){
     user_score = 0;
     showScore();
     clearInterval(live_time_interval);
+    live_time = document.getElementById("live");
+    live_time.innerText = "Live" + " " +  reset_time.toFixed(2);
+    updateLastTime(reset_time.toFixed(2));
+    updateBestTime(reset_time.toFixed(2));
     startGame();
 
 }
 
-function upadateLastTime(){
+function updateLastTime(game_time){
     last_time = document.getElementById("last");
     last_time.innerText = "Last" + " " + game_time;
 
 }
 
-function updateBestTime(){
+function updateBestTime(game_time){
     if (game_time < best_time){
         last_time = document.getElementById("best");
         last_time.innerText = "Best" + " " + game_time;
