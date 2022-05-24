@@ -4,8 +4,9 @@ window.addEventListener("load", createScoreBlock);
 let game_over = true; 
 let user_score = 0;
 let live_time_interval = 0;
-let game_time = 0;
 let best_time = Infinity;
+let game_time = 0;
+let reset_time = 0;
 
 function playGame(){
     let start = document.getElementById("start");
@@ -24,10 +25,7 @@ function playGame(){
     }
     
     let out_of_bounds = document.getElementById("game");
-    out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);
-
-    start.removeEventListener("mouseenter", playGame);
-    
+    out_of_bounds.addEventListener("mouseleave", gotOutOfBounds);    
     
 
 }
@@ -42,8 +40,10 @@ function winGame(){
         user_score += 5;
         showScore();
         clearInterval(live_time_interval);
-        upadateLastTime(game_time);
-        updateBestTime(game_time);
+        upadateLastTime();
+        updateBestTime();
+        live_time = document.getElementById("live");
+        live_time.innerText = "Live" + " " +  reset_time.toFixed(2);
     }
 }
 
@@ -61,6 +61,8 @@ function loseGame(){
         user_score -= 10;
         showScore();
         clearInterval(live_time_interval);
+        live_time = document.getElementById("live");
+        live_time.innerText = "Live" + " " +  reset_time.toFixed(2);
 
     }
 }
@@ -70,6 +72,8 @@ function gotOutOfBounds(){
         game_over = true;
         alert("You cheated!");
         clearInterval(live_time_interval);
+        live_time = document.getElementById("live");
+        live_time.innerText = "Live" + " " +  reset_time.toFixed(2);
 
     }
 }
@@ -107,6 +111,7 @@ function startGame(){
     for (let i = 0; i < n -1; i++){
         boundaries[i].classList.remove("youlose");
     }
+    
     playGame();
 }
 
@@ -116,16 +121,17 @@ function restartGame(){
     user_score = 0;
     showScore();
     clearInterval(live_time_interval);
+    startGame();
 
 }
 
-function upadateLastTime(game_time){
+function upadateLastTime(){
     last_time = document.getElementById("last");
     last_time.innerText = "Last" + " " + game_time;
 
 }
 
-function updateBestTime(game_time){
+function updateBestTime(){
     if (game_time < best_time){
         last_time = document.getElementById("best");
         last_time.innerText = "Best" + " " + game_time;
